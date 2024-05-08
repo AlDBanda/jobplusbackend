@@ -362,6 +362,111 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'Category';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    title: Attribute.String;
+    sector: Attribute.Relation<
+      'api::category.category',
+      'manyToOne',
+      'api::sector.sector'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiHomeSectorHomeSector extends Schema.SingleType {
+  collectionName: 'home_sectors';
+  info: {
+    singularName: 'home-sector';
+    pluralName: 'home-sectors';
+    displayName: 'HomeSector';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    title: Attribute.String;
+    subTitle: Attribute.String;
+    sectors: Attribute.Relation<
+      'api::home-sector.home-sector',
+      'oneToMany',
+      'api::sector.sector'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::home-sector.home-sector',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::home-sector.home-sector',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSectorSector extends Schema.CollectionType {
+  collectionName: 'sectors';
+  info: {
+    singularName: 'sector';
+    pluralName: 'sectors';
+    displayName: 'Sector';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    title: Attribute.String;
+    smallImage: Attribute.Media;
+    bigImage: Attribute.Media;
+    categories: Attribute.Relation<
+      'api::sector.sector',
+      'oneToMany',
+      'api::category.category'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::sector.sector',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::sector.sector',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -799,6 +904,9 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::category.category': ApiCategoryCategory;
+      'api::home-sector.home-sector': ApiHomeSectorHomeSector;
+      'api::sector.sector': ApiSectorSector;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
